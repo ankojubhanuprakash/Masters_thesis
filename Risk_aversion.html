@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
+<script src="https://unpkg.com/jspsych@7.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
+<link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+<script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+
+<style> 
+    .left-align #instructions {text-align: left;}
+   
+</style>
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">         
+      <a class="navbar-brand" href="#">IQ test</a>
+    </div>
+    
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content id="insidebts">
+    
+    <div class="col-sm-8 text-left" id='bio'> 
+        
+      <h1>Welcome</h1><hr>
+      <p>Please enter your details, to proceed for the experiment. </p><br>
+      
+        <div class="form-group">
+             
+            <label for="name">
+                Name
+            </label>
+            <input type="text" class="form-control" id="name"  onchange="enable_button()"/>
+        </div>
+
+
+
+        <div class="form-group">
+             
+            <label for="email">
+                Email address
+            </label>
+            <input type="email" class="form-control" id="email" onchange="enable_button()" />
+        </div>
+        <div class="form-group">
+             
+            <label for="email2">
+                Confirm Email address
+            </label>
+            <input type="email" class="form-control" id="email2" onchange="enable_button()" />
+        </div>
+
+
+        <div class="form-group">
+             
+            <label for="age">
+                Age
+            </label>
+            <input type="number" class="form-control" id="age"  onchange="enable_button()"/>
+        </div>
+
+        <div class="form-group">
+             
+            <label for="gender">
+                Gender
+            </label>
+            <select  class="form-control" id="gender"  onchange="enable_button()">
+                <option>Male</option>
+                <option>Female  </option>
+            </select>
+        </div>
+        <div class="form-group">
+             
+            <label for="institute">
+                Institute 
+            </label>
+            <input type='text'  class="form-control" id="institute"  onchange="enable_button()" />
+                
+        </div>
+        
+        
+        <button type="submit" id='data_submit' class="btn btn-primary" onclick="validateForm()" disabled>
+            Submit
+        </button>
+    
+      
+    </div>
+    
+  </div>
+</div>
+
+
+
+</body>
+
+<script src='gamble_functions.js'></script>
+<script src='data.js'></script>
+<script>
+  var format = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+            });
+  
+
+    // prereqhtml for header 
+    prereq_html = '<nav class="navbar navbar-inverse"><div class="container-fluid"> <div class="navbar-header"><a class="navbar-brand" href="#">IQ test</a>'+
+                    '</div> </div> </nav>' + '<div class="container-fluid text-center"> <div class="row content" id="insidebts"> </div></div>'
+
+    //prereq_html for Raven matrices
+    prereq_html_iq = "<center><div id='tracker'></div><div id='question'></div></center><div id='tracker'></div>" + 
+                "<div id='option'  style='display: flex; column-gap: 20px; justify-content: space-between;''></div>"
+    // user data
+    master_json={}
+    //risk aversion _data               
+    questionnaire_identifier = [0,1,2,3,4]
+    local_q_identifer=questionnaire_identifier.sort(() => Math.random() - 0.5);
+    local_q_count=0//used to track which questionnaire is showed
+    var random_quadrant = Math.floor(Math.random()*4)+1
+    master_json['Quadrant'] = random_quadrant;
+    master_json['questionnaire'] = {0:[],1:[],2:[],3:[],4:[]}
+    Questionnaire_quadrant_set = get_risk_aversion_data()
+
+    if (random_quadrant<=2){
+        answer_choice=['I will buy the lottery ticket.','I will not buy the lottery ticket.']
+
+    }else{
+        answer_choice=['I will pay the premium.','I will not pay the premium.']
+
+    }
+    
+           
+    
+    
+</script>
+</html>

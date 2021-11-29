@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://unpkg.com/jspsych@7.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
+
+<link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+<script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+<script src='data.js'></script>
+<script src='pre_def.js'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+<style>
+ 
+        
+            </style>
+</style>
+<body>
+<div id='user' >
+    <h1>Welcome</h1>
+    <form name="myForm" method='post'>
+        <table>
+        <tr><td>Name:</td><td> <input type="text" name="fname" required ></td></tr>
+        <tr><td>Age:</td><td> <input type="number"  name="fage" required ></td></tr>
+        <tr><td>Email: </td><td><input type="email" name="femail" required ></td></tr>
+        <!--<tr><td>Mobile: </td><td><input type="number"  name="fcell" required > </td></tr>-->
+        <tr><td>Gender:</td><td><select name="fgender" id="fgender">
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                   </select></td></tr>
+        <!--<tr><td>Previously Employed:</td><td><select name="fgender" id="fgender">
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select></td></tr>-->
+        <!--<tr><td>Employed:</td><td><input type="text" name="femp" required ></td></tr>-->
+        <tr><td>Institute:</td><td><input type="text" name="finst" required></td></tr></table>
+        
+    <input type="button" value="Submit" onclick="validateForm()"></form>
+ 
+        
+</div>
+
+<center><div id='tracker'></div><div id='question'></div></center><div id='tracker'></div>
+
+<div id='option'  style='display: flex; column-gap: 20px; justify-content: space-between;''></div>
+
+</body>
+
+
+<script>
+         var format = new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+            });
+    //prereq_html
+    prereq_html = "<center><div id='tracker'></div><div id='question'></div></center><div id='tracker'></div>" + 
+                "<div id='option'  style='display: flex; column-gap: 20px; justify-content: space-between;''></div>"
+
+    // user data
+    master_json={}
+    //ravendata
+    count=0
+    score=0
+    raven_data = get_raven_data()
+    folder = raven_data[0]
+    folder_images = raven_data[1]
+    raevan_answers= raven_data[2]
+    // CRT_data
+    // wais_data 
+    wais_count=0
+    wais_data = get_wais_data()  
+    wais_question = wais_data[0]
+    wais_answers=wais_data[2] ;
+    wais_choices = wais_data[1]
+    wais_score=0
+    //risk aversion _data               
+    questionnaire_identifier = [0,1,2,3,4]
+    local_q_identifer=questionnaire_identifier.sort(() => Math.random() - 0.5);
+    local_q_count=0//used to track which questionnaire is showed
+    var random_quadrant = Math.floor(Math.random()*4)+1
+    master_json['Quadrant'] = random_quadrant;
+    master_json['questionnaire'] = {0:[],1:[],2:[],3:[],4:[]}
+    Questionnaire_quadrant_set = get_risk_aversion_data()
+
+    if (random_quadrant<=2){
+        answer_choice=['I will buy the lottery ticket.','I will not buy the lottery ticket.']
+
+    }else{
+        answer_choice=['I will pay the premium.','I will not pay the premium.']
+
+    }//console.log(count)
+    //function wais_load_question()
+     
+</script>
+
+
+</html>    
