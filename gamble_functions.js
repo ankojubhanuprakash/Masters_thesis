@@ -151,13 +151,16 @@ function psych_js(){
             },
             on_finish: function(){
                 if (local_q_count>=4){
+                    storedata()
+                    /*
                     push_data=JSON.stringify(master_json)
                     var formData = new FormData();
                     formData.append("fname", master_json['name']+String(Math.floor((Math.random() * 1000) + 1))+".txt");
                     formData.append("data", push_data);                        
                     var request = new XMLHttpRequest();
+                    url
                     request.open('POST', 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/writedata.php', true);            
-                    request.send(formData);
+                    request.send(formData);*/
 
                 }else{     
                     local_q_count+=1
@@ -213,7 +216,7 @@ function storedata(){
     //console.log(formData)
 
     const request = new XMLHttpRequest();
-    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_exp&email=false&method=1&flds='+'name,email,rvn_score'
+    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=2&flds='+'name,email,rvn_score'
     //console.log(url)
     request.open('POST', url, true);            
     request.send(formData);
