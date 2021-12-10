@@ -1,28 +1,38 @@
 function enable_button(){
     username = document.getElementById('name').value
     email =  document.getElementById('email').value
-    age =  document.getElementById('age').value
-    gender =  document.getElementById('gender').value
+    //age =  document.getElementById('age').value
+    //gender =  document.getElementById('gender').value
     email2 =  document.getElementById('email2').value
+    consent=document.getElementById('consent').checked
     //institute =  document.getElementById('institute').value
     //if (username == '' || email == '' || email2 == '' || age == '' || gender == '' || institute == ''){
-    if (username == '' || email == '' || email2 == '' || age == '' || gender == '' ){
+    if (username == '' || email == ''  || email2 == ''  ){    
+    //if (username == '' || email == '' || email2 == '' || age == '' || gender == '' ){    
         document.getElementById("data_submit").disabled = true;
+        document.getElementById("hide_hover").innerHTML = 'please enter all fields';
         }else{
-        document.getElementById("data_submit").disabled = false;
+            if(consent){
+                document.getElementById("data_submit").disabled = false;
+                document.getElementById("hide_hover").innerHTML = '';
+            }else{
+                document.getElementById("data_submit").disabled = true;
+                document.getElementById("hide_hover").innerHTML = 'please provide your consent to take the IQ test.';}
+        
+        
         }
 }
 function validateForm(){        
     username = document.getElementById('name').value
     email =  document.getElementById('email').value
-    age =  document.getElementById('age').value
-    gender =  document.getElementById('gender').value
+    //age =  document.getElementById('age').value
+    //gender =  document.getElementById('gender').value
     email2 =  document.getElementById('email2').value
     if (email == email2) {
         document.getElementById('bio').style.visibility='hidden'
         master_json['name']=username;
-        master_json['age']=age;
-        master_json['gender']=gender;
+        //master_json['age']=age;
+        //master_json['gender']=gender;
         //master_json['institute']=institute;
         master_json['email']=email;
         //master_json['user_rvn_choice']=[]// collect users options for iq test
@@ -30,7 +40,7 @@ function validateForm(){
         gamble_master_instructions()
 
     }else{
-        alert('Confitm email address is differet! please verify.')
+        alert('Confirm email address is differet! please verify.')
     }
 }
 function instruction_stimuli(quadrant){
@@ -116,16 +126,15 @@ function instruction_stimuli(quadrant){
         }
 }
 function psych_js(){
-        
-        
-
 
     gamble_data = Questionnaire_quadrant_set[random_quadrant][local_q_identifer[local_q_count]]['gamble']
     certain_data = Questionnaire_quadrant_set[random_quadrant][local_q_identifer[local_q_count]]['certain']
     //console.log(certain_data)
-    if (random_quadrant>2){
+
+    //below reverse array is not required since, data is designed at the begginning 
+  /*  if (random_quadrant>2){
         certain_data.reverse()
-    }
+    }*/
     //console.log(certain_data)
     //console.log(certain_data)
     const jsPsych = initJsPsych({
@@ -216,7 +225,8 @@ function storedata(){
     //console.log(formData)
 
     const request = new XMLHttpRequest();
-    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=2&flds='+'name,email,rvn_score'
+    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?dir=msths_second&email=false&method=2'
+    //url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=2&flds='+'name,email,rvn_score'
     //console.log(url)
     request.open('POST', url, true);            
     request.send(formData);
