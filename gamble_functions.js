@@ -45,25 +45,30 @@ function validateForm(){
 }
 function instruction_stimuli(quadrant){
     if (quadrant == 1 || quadrant == 2){ 
-        return '<h1>You are invited to a casino</h1>.<ul id="instructions"> <li>You are requested to play 5 gambles</li><li>In each gamble , you need to make several choices.  </li></ul>'+
-               '<img src = "images/gamble/image1.jpg">'+ 
-                '<ul id="instructions"><li>The above image corresponds to one gamble, where you need to provide your preference for each row</li>'+
-                '<li>So your preference could be buying the lottery ticket or acceptinh the safe option</li></ul>'+
-                '  The casino consists of multiple gambles, where in each gamble you will be provided two choices.<br> One of the choice is to buy the ticket, which involves luck, where you can'+ 
-                ' win or lose the amount with a certain probability. <br>The other choice is not to buy the ticket, where you are guaranteed to take the away safe amount.<br> You are required to choose one of the two options, in each gamble.' +
-                '<br>press any Key to conintue.</p>'
+        return '<h3>Welcome</h3>'+
+        '<ul id="instructions"><li>You will be playing a set of five gambles. </li><li>Each gamble will take the form of a table similar to the one displayed below.</li>'+
+         '<li>In the table, the lottery amount remains same but the safe amount increases as you progress down the table. </li><li>You need to provide your choice for every row of the table!</li><ul><li>That is whether to buy the lottery ticket that may fetch you the lottery amount with some chance.</li><li>Or accept the safe amount instead of buying the lottery ticket.</li></ul>'+
+         '<li>At the end, one row from one of the five choice tables would be randomly selected. And your reward <br>will be proportional to the choice you made in that selected row.</li></ul>'+'<img src = "images/gamble/instructions0.jpg" style="width:90%">'
         }
         else{
-            return "<p> You are were asked to choose to pay Insurance premium to face a probable huge loss.</p><br><p>press any key to continue</p>"
-
+            return '<h2>Welcome</h2>'+
+            '<ul id="instructions"><li>You will go through a set of five Insurance Covers.</li><li>Each insurance cover will take the form of a table similar to the one displayed.</li>'+
+             '<li>In the table, the uncertain loss remains same but the insurance premium decreases as you progress down the table. </li><li>You need to provide your choice for every row of the table!</li><ul><li>That is whether to bear the uncertain loss by "not paying the premium".</li><li>Or insure the uncertain loss by "paying the premium".</li></ul>'+
+             '<li>At the end, one row from one of the five choice tables would be randomly selected. And an amount <br>proportional to the choice you made in that selected row will be deducted from the overall compensation.</li></ul>'+'<img src = "images/gamble/instructions1.jpg" style="width:75%">'
         }
 }
 function gamble_master_instructions(){
-    var jsPsych = initJsPsych({on_finish: function(){psych_js()}
+    var jsPsych = initJsPsych({on_finish: function(){practice()}
     })
     //Experiment code
-    
-    
+    var instructions0 = {
+        type: jsPsychHtmlButtonResponse,
+        //stimulus: '<h3>Instructions</h3>.<ul id="instructions"> <li>You are requested to play 5 gambles</li><li>In each gamble , you need to make several choices.  </li></ul>'+
+        stimulus:instruction_stimuli(random_quadrant) ,
+         choices:['Continue'],
+        css_classes: 'left-align' 
+        }; 
+    /*
     var instructions1 = {
         type: jsPsychHtmlButtonResponse,
         stimulus: '<h1>You are invited to a Casino</h1>.<ul id="instructions"> <li>You are requested to play 5 gambles</li><li>In each gamble , you need to make several choices.  </li></ul>'+
@@ -97,11 +102,83 @@ function gamble_master_instructions(){
         css_classes: 'left-align' 
         };  
 
-   
+   */
     //desription
 
-    jsPsych.run([instructions1,instructions2,instructions3,instructions4]);    
+    //jsPsych.run([instructions0,instructions1,instructions2,instructions3,instructions4]);    
+    jsPsych.run([instructions0]);//,instructions1,instructions2,instructions3,instructions4]);    
     
+}
+
+function practice(){
+    var jsPsych = initJsPsych({on_trial_finish : function(data){
+        if (data['response']==1){
+            //console.log(timeline)
+            if (random_quadrant<3){
+                var r = confirm("Do you prefer taking the safe amount greater than the currently chosen safe amount?");
+            }else{
+//                var r = confirm("If you are asked to pay a premium amount lesser than the premium you have currently chosen for the same insured loss, will you pay it?");
+                var r = confirm("Do you prefer all lower insurance premium than the current premium against the uncertain loss?");
+    
+            }
+            if (r== true){experiment_start();
+           }
+             //timeline.push(instructions)
+            }
+        },on_finish: function(){experiment_start()}
+    })
+
+    if (random_quadrant<3){
+        gamble_data = ['90%','16,000']
+        certain_data = [2600, 3200, 3900, 4500, 5200, 5800, 6500, 7100, 7800, 8400,
+                    9100, 9700, 10400, 11000, 11700, 12300, 13000, 13600, 14300, 15000, ]
+    }else{
+        gamble_data = ['3%','2,27,000'] 
+        certain_data = [4300, 4500, 4700, 4900, 5100, 5300, 5500, 5700, 5900, 6100,
+                        6300, 6500, 6700, 6900, 7000, 7200, 7400, 7600, 7800,  8000 ] 
+        certain_data.reverse()                        
+    }
+
+
+
+    var start = {
+        type: jsPsychHtmlButtonResponse,
+        //stimulus: '<h3>Instructions</h3>.<ul id="instructions"> <li>You are requested to play 5 gambles</li><li>In each gamble , you need to make several choices.  </li></ul>'+
+        stimulus: 'Practice Trial',
+         choices:['Continue'],
+        css_classes: 'left-align' 
+        }; 
+    
+    var timeline = []
+    var instructions = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: 'l'
+        };    
+    var test_stimuli=[]    
+    certain_data.forEach(element => {
+        test_stimuli.push({ 
+            stimulus: construct_trial(random_quadrant,gamble_data,element)},
+            )           
+        });
+    var test_master_trial = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: jsPsych.timelineVariable('stimulus'),
+            choices: answer_choice,data:{'task':'Q'}
+            
+                    }    
+    var test_procedure = {
+                        timeline: [test_master_trial],
+                        timeline_variables: test_stimuli,
+                        //randomize_order: true   ,
+                        //repetitions: 10
+                            }    
+    timeline.push(start)
+    //trials
+    timeline.push(test_procedure   )   
+
+    //desription
+
+    jsPsych.run(timeline);           
 }
 
 
@@ -110,20 +187,23 @@ function construct_trial(quadrant,gamble, safe){
     return "<div class:'trl' ><p>Do you want to buy a lottery ticket that has a "+gamble[0]+" chance of winning ₹"+gamble[1]+"?<br> or you can opt for the safe amount of "+format.format(safe)+"</p></div>"  
     }
     else{
-        return "<div class:'trl' ><p>"+gamble[0]+" chance of losing INR"+gamble[1]+" or pay Premium of "+String(safe)+"</p></div>"
+        //Are you willing to insure an uncertain loss by paying an insurance premium?
+        return "<div class:'trl' ><p>There is a "+gamble[0]+" chance that you may lose ₹"+gamble[1]+". <br>Are you willing to insure against the uncertain loss<br> by paying an insurance premium of "+format.format(safe)+"?</p></div>"
 
     }
             }
-function instruction_stimuli(quadrant){
-    if (quadrant == 1 || quadrant == 2){ 
-        return '<p>You are invited to a casino. The casino consists of multiple gambles, where in each gamble you will be provided two choices.<br> One of the choice is to buy the ticket, which involves luck, where you can'+ 
-                ' win or lose the amount with a certain probability. <br>The other choice is not to buy the ticket, where you are guaranteed to take the away safe amount.<br> You are required to choose one of the two options, in each gamble.' +
-                '<br>press any Key to conintue.</p>'
-        }
-        else{
-            return "<p> You are were asked to choose to pay Insurance premium to face a probable huge loss.</p><br><p>press any key to continue</p>"
-
-        }
+function experiment_start(){
+    var jsPsych = initJsPsych({on_finish: function(){psych_js()}
+    })
+    var instructions0 = {
+        type: jsPsychHtmlButtonResponse,
+        //stimulus: '<h3>Instructions</h3>.<ul id="instructions"> <li>You are requested to play 5 gambles</li><li>In each gamble , you need to make several choices.  </li></ul>'+
+        stimulus:'Actual Experiment start',
+         choices:['Continue'],
+        css_classes: 'left-align' 
+        }; 
+        jsPsych.run([instructions0])
+  
 }
 function psych_js(){
 
@@ -148,9 +228,9 @@ function psych_js(){
             if (data['response']==1){
                 //console.log(timeline)
                 if (random_quadrant<3){
-                    var r = confirm("In a subsequent gamble, Do you prefer taking the safe amount greater than the currently chosen safe amount?");
+                    var r = confirm("Do you prefer taking the safe amount greater than the currently chosen safe amount?");
                 }else{
-                    var r = confirm("If you are asked to pay a premium amount lesser than the premium you have currently chosen for the same insured loss, will you pay it?");
+                    var r = confirm("Do you prefer all lower insurance premium than the current premium against the uncertain loss?");
 
                 }
                 if (r== true){jsPsych.endExperiment(' ');
@@ -161,6 +241,17 @@ function psych_js(){
             on_finish: function(){
                 if (local_q_count>=4){
                     storedata()
+                    document.body.innerHTML = prereq_html
+                   // document.getElementById('insidebts').innerHTML=prereq_html_iq 
+                    //newentry
+                    //document.getElementById('bts_options').innerHTML=prereq_html_iq_options
+                    document.getElementById('insidebts').innerHTML='<p> Thank you for participation, we have sent you an email regarding your compensation. Consider checking spam folder.<br>'+
+                    'if you dont recieve please drop an email to ankojubhan20@iitk.ac.in . You may close the window. </p>'
+                    document.getElementById('option').innerHTML=''
+                    popit='false'
+
+
+
                     /*
                     push_data=JSON.stringify(master_json)
                     var formData = new FormData();
@@ -182,8 +273,9 @@ function psych_js(){
     //Experiment code
     var timeline = []
     var instructions = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: instruction_stimuli(random_quadrant)
+        type: jsPsychHtmlButtonResponse,
+        stimulus: gam_or_ins()+String(local_q_count+1),
+        choices:['Continue']
         };    
     var test_stimuli=[]    
     certain_data.forEach(element => {
@@ -237,4 +329,12 @@ function storedata(){
           console.log(this.responseText)
         }
       };
+}
+function gam_or_ins(){
+    if (random_quadrant<3){
+        return 'Gamble - '
+    }else{
+        return 'Insurance Cover - '
+    }
+
 }

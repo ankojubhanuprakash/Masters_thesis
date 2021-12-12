@@ -144,6 +144,7 @@ function storedata(){
             request.send(formData);
             document.getElementById('insidebts').innerHTML='<p> Thank you for participation, Your IQ details are sent to your email address.<br> consider checking SPAM folder . You may close the window. </p>'
             document.getElementById('option').innerHTML=''
+            popit='false'
             
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
