@@ -48,13 +48,13 @@ function instruction_stimuli(quadrant){
         return '<h3>Welcome</h3>'+
         '<ul id="instructions"><li>You will be playing a set of five gambles. </li><li>Each gamble will take the form of a table similar to the one displayed below.</li>'+
          '<li>In the table, the lottery amount remains same but the safe amount increases as you progress down the table. </li><li>You need to provide your choice for every row of the table!</li><ul><li>That is whether to buy the lottery ticket that may fetch you the lottery amount with some chance.</li><li>Or accept the safe amount instead of buying the lottery ticket.</li></ul>'+
-         '<li>At the end, one row from one of the five choice tables would be randomly selected. And your reward <br>will be proportional to the choice you made in that selected row.</li></ul>'+'<img src = "images/gamble/instructions0.jpg" style="width:90%">'
+         '<li>At the end, one row from one of the five choice tables would be randomly selected. And your reward <br>will be proportional to the choice you made in that selected row.</li><li>You will be given practice trial first and then actial experiment starts.</li></ul>'+'<img src = "../images/gamble/instructions0.jpg" style="width:90%">'
         }
         else{
             return '<h2>Welcome</h2>'+
             '<ul id="instructions"><li>You will go through a set of five Insurance Covers.</li><li>Each insurance cover will take the form of a table similar to the one displayed.</li>'+
              '<li>In the table, the uncertain loss remains same but the insurance premium decreases as you progress down the table. </li><li>You need to provide your choice for every row of the table!</li><ul><li>That is whether to bear the uncertain loss by "not paying the premium".</li><li>Or insure the uncertain loss by "paying the premium".</li></ul>'+
-             '<li>At the end, one row from one of the five choice tables would be randomly selected. And an amount <br>proportional to the choice you made in that selected row will be deducted from the overall compensation.</li></ul>'+'<img src = "images/gamble/instructions1.jpg" style="width:75%">'
+             '<li>At the end, one row from one of the five choice tables would be randomly selected. And an amount <br>proportional to the choice you made in that selected row will be deducted from the overall compensation.</li><li>You will given be practice trial first and then actial experiment starts.</li></ul>'+'<img src = "../images/gamble/instructions1.jpg" style="width:75%">'
         }
 }
 function gamble_master_instructions(){
@@ -317,7 +317,8 @@ function storedata(){
     //console.log(formData)
 
     const request = new XMLHttpRequest();
-    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?dir=msths_second&email=false&method=2'
+    //url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?dir=msths_second&email=false&method=2'
+    url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=3&flds='+'name,email,Quadrant'
     //url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=2&flds='+'name,email,rvn_score'
     //console.log(url)
     request.open('POST', url, true);            
