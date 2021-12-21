@@ -245,8 +245,8 @@ function psych_js(){
                    // document.getElementById('insidebts').innerHTML=prereq_html_iq 
                     //newentry
                     //document.getElementById('bts_options').innerHTML=prereq_html_iq_options
-                    document.getElementById('insidebts').innerHTML='<p> Thank you for participation, we have sent you an email regarding your compensation. Consider checking spam folder.<br>'+
-                    'if you dont recieve please drop an email to ankojubhan20@iitk.ac.in . You may close the window. </p>'
+                    document.getElementById('insidebts').innerHTML='<p> Thank you for participation, we shall get back to you soon with your compensation. <br>'+
+                    'if you dont recieve any info, please drop an email to ankojubhan20@iitk.ac.in . You may close the window. </p>'
                     document.getElementById('option').innerHTML=''
                     popit='false'
 
