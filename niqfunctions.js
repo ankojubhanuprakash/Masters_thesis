@@ -138,10 +138,15 @@ function storedata(){
             //console.log(formData)
 
             const request = new XMLHttpRequest();
-            url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths&email=true&method=3&flds='+'name,email,rvn_score,std_rvn_score,test_duration'
+            url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths&email=true&method=3&flds='+'name,email,gender,rvn_score,std_rvn_score,test_duration'
+            url2 = 'https://iitkiqtest.azurewebsites.net/az_master_write_data.php?csv_file=server.csv&dir=msths&email=false&method=3&flds='+'name,email,gender,rvn_score,std_rvn_score,test_duration'
             //console.log(url)
             request.open('POST', url, true);            
             request.send(formData);
+            request2 = new XMLHttpRequest();
+            request2.open('POST', url2, true);            
+            request2.send(formData);
+
             document.getElementById('insidebts').innerHTML='<p> Thank you for participation, Your IQ details are sent to your email address.<br> consider checking SPAM folder . You may close the window. </p>'
             document.getElementById('option').innerHTML=''
             popit='false'
