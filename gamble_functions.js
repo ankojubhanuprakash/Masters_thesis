@@ -319,8 +319,10 @@ function storedata(){
     const request = new XMLHttpRequest();
     //url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?dir=msths_second&email=false&method=2'
     url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=3&flds='+'name,email,Quadrant'
-    url2 = 'https://iitkiqtest.azurewebsites.net/az_master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=3&flds='+'name,email,Quadrant'
-   
+    //////////////changed below url2 ro srivalab -start
+    //url2 = 'https://iitkiqtest.azurewebsites.net/az_master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=3&flds='+'name,email,Quadrant'
+    url2 = 'https://srivalab-compute.cse.iitk.ac.in/bhanu/write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=3&flds='+'name,email,Quadrant'
+    //////////////changed below url2 ro srivalab -end
     //url = 'https://cgs1.cgs.iitk.ac.in/user/ankojubhan20/msths/master_write_data.php?csv_file=server.csv&dir=msths_second&email=false&method=2&flds='+'name,email,rvn_score'
     //console.log(url)
     request.open('POST', url, true);            
