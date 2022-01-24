@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head> 
-  <title>IQ test</title>
+  <title>Risk Aversion</title>
   <meta charset="utf-8">
   <meta name="description" content="Free IQ test">
   <meta name="keywords" content="IQ test, India, intelligence test, IIT Kanpur">
@@ -62,7 +62,7 @@
 <nav class="navbar navbar-inverse navbar-fixed">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">IQ test</a>
+        <a class="navbar-brand" href="#">Risk aversion</a>
       </div>          
     </div>
 </nav>
@@ -72,7 +72,7 @@
       <div class="col-xs-8 text-left" id='bio'>          
         <h1>Welcome</h1>
               <hr>
-        <p>Please enter your details, to proceed for the IQ test. </p><br>
+        <p>Please enter your details, to proceed for the Risk aversion study. </p><br>
         
           <div class="form-group">
                
@@ -150,7 +150,8 @@
     questionnaire_identifier = [0,1,2,3,4]
     local_q_identifer=questionnaire_identifier.sort(() => Math.random() - 0.5);
     local_q_count=0//used to track which questionnaire is showed
-    var random_quadrant = Math.floor(Math.random()*4)+1
+    var list_quadrants = [1,3,4]
+    var random_quadrant = list_quadrants[Math.floor(Math.random()*list_quadrants.length)]
     master_json['Quadrant'] = random_quadrant;
     master_json['questionnaire'] = {0:[],1:[],2:[],3:[],4:[]}
     Questionnaire_quadrant_set = get_risk_aversion_data()
